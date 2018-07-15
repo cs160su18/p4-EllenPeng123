@@ -1,36 +1,179 @@
+
 {% load static %}
 
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta charset="UTF-8"> 
+    
     <title>P4 Drawing</title>
 
     <link rel="stylesheet" type="text/css" href="{% static 'draw/vendor/bootstrap/css/bootstrap.min.css' %}">
     <script type="text/javascript" src="{% static 'draw/vendor/jquery/jquery-3.3.1.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'draw/vendor/paper/paper-full.min.js' %}"></script>
-
+    
     <style type="text/css">
-    </style>
 
+
+
+.chessboard {
+    width: 506px;
+    height: 506px;
+    margin: 20px;
+    border: 5px solid #0000A0;
+}
+.black, .white {
+  text-align:center;
+    display: table-cell;
+    vertical-align:middle;
+    float: left;
+    height: 62px;
+    width: 62px;   
+    font-size:40px;    
+}
+.white {
+    background-color: #fff;    
+}
+.black{
+   background-color: #999;
+}
+.hidden{
+     opacity:0;
+}
+
+.Select{
+  border-style:solid;
+    border-width: 5px;
+    border-color:	#006400;
+}
+.Show1{
+  position: absolute;
+  top:300px;
+  margin-left:35px;
+}
+.Show2{
+  position: absolute;
+  top:360px;
+  margin-left:347px;
+}
+</style>
 </head>
 <body>
-    <!-- You may change the dimensions of this canvas -->
-    <canvas id="myCanvas" width="750px" height="750px"></canvas>
-</body>
-<script>
-
-    // setting up the canvas and one paper tool
-    var canvas = document.getElementById('myCanvas');
-    paper.setup(canvas);
-    var tool = new paper.Tool();
-
-    // getting the URL (you may want to use for Exercise 3)
-    var url = window.location.href;
-
-    // var socket = new WebSocket(
-    //     'ws://your url here:8765/');
-
-
+ <p style = "margin:5px;">
+    Democratic Chessboard
+  </p></br>
+  <div class = "playerblack" style = "postion:absolute;left:-400px;font:bold;">
+    current player: <b style = "color:#FF0000;">black</b>
+  </div>
+  <div class = "playerwhite" style = "postion:absolute;left:-400px;font:bold;">
+    current player: <b  style = "color:#FF0000;">white</b>
+  </div>
+  <img class = "pawn1" style = "width:2%;" src = "http://icons-for-free.com/free-icons/png/128/754819.png"></img>
+  <img class = "pawn2" style = "width:2%;" src = "https://www.shareicon.net/data/128x128/2015/09/27/108210_game_512x512.png"></img>
+<div class="chessboard">
+  
+<!-- 1st -->
+<div class="white">&#9820;</div>
+<div class="black">&#9822;</div>
+<div class="white">&#9821;</div>
+<div class="black">&#9819;</div>
+<div class="white">&#9818;</div>
+<div class="black">&#9821;</div>
+<div class="white">&#9822;</div>
+<div class="black">&#9820;</div>
+<!-- 2nd -->
+<button class="black"><img style = "width:95%; margin-top:-5px" src = "https://www.shareicon.net/data/128x128/2015/09/27/108210_game_512x512.png"></img></button>
+<button class="white"><img style = "width:95%; margin-top:-5px" src = "https://www.shareicon.net/data/128x128/2015/09/27/108210_game_512x512.png"></img></button>
+<button class="black"><img style = "width:95%; margin-top:-5px" src = "https://www.shareicon.net/data/128x128/2015/09/27/108210_game_512x512.png"></img></button>
+<button class="white"><img style = "width:95%; margin-top:-5px" src = "https://www.shareicon.net/data/128x128/2015/09/27/108210_game_512x512.png"></img></button>
+<button class="black"><img style = "width:95%; margin-top:-5px" src = "https://www.shareicon.net/data/128x128/2015/09/27/108210_game_512x512.png"></img></button>
+<button class="white" id = "target2"><img style = "width:95%; margin-top:-5px" src = "https://www.shareicon.net/data/128x128/2015/09/27/108210_game_512x512.png"></img></button>
+<button class="black"><img style = "width:95%; margin-top:-5px" src = "https://www.shareicon.net/data/128x128/2015/09/27/108210_game_512x512.png"></img></button>
+<button class="white"><img style = "width:95%; margin-top:-5px" src = "https://www.shareicon.net/data/128x128/2015/09/27/108210_game_512x512.png"></img></button>
+<!-- 3th -->
+<div class="white"></div>
+<div class="black"></div>
+<div class="white"></div>
+<div class="black"></div>
+<div class="white"></div>
+<div class="black"></div>
+<div class="white"></div>
+<div class="black"></div>
+<!-- 4st -->
+<div class="black" id = "dest1"></div>
+<div class="white"></div>
+<div class="black"></div>
+<div class="white"></div>
+<div class="black"></div>
+<div class="white"></div>
+<div class="black"></div>
+<div class="white"></div>
+<!-- 5th -->
+<button class="white"></button>
+<button class="black"></button>
+<button class="white"></button>
+<button class="black"></button>
+<button class="white"></button>
+<button class="black" id = "dest2"></button>
+<button class="white"></button>
+<button class="black"></button>
+<!-- 6th -->
+<div class="black"></div>
+<div class="white"></div>
+<div class="black"></div>
+<div class="white"></div>
+<div class="black"></div>
+<div class="white"></div>
+<div class="black"></div>
+<div class="white"></div>
+<!-- 7th -->
+<button class="white" id = "target1"><img style = "width:90%; margin-top:-10px;" src = "http://icons-for-free.com/free-icons/png/128/754819.png"></button>
+<button class="black"><img style = "width:90%; margin-top:-10px;" src = "http://icons-for-free.com/free-icons/png/128/754819.png"></button>
+<button class="white"><img style = "width:90%; margin-top:-10px;" src = "http://icons-for-free.com/free-icons/png/128/754819.png"></button>
+<button class="black"><img style = "width:90%; margin-top:-10px;" src = "http://icons-for-free.com/free-icons/png/128/754819.png"></button>
+<button class="white"><img style = "width:90%; margin-top:-10px;" src = "http://icons-for-free.com/free-icons/png/128/754819.png"></button>
+<button class="black"><img style = "width:90%; margin-top:-10px;" src = "http://icons-for-free.com/free-icons/png/128/754819.png"></button>
+<button class="white"><img style = "width:90%; margin-top:-10px;" src = "http://icons-for-free.com/free-icons/png/128/754819.png"></button>
+<button class="black"><img style = "width:90%; margin-top:-10px;" src = "http://icons-for-free.com/free-icons/png/128/754819.png"></button>
+<!-- 8th -->
+<div class="black">&#9814;</div>
+<div class="white">&#9816;</div>
+<div class="black">&#9815;</div>
+<div class="white">&#9813;</div>
+<div class="black">&#9812;</div>
+<div class="white">&#9815;</div>
+<div class="black">&#9816;</div>
+<div class="white">&#9814;</div>
+</div>
+  <script type="text/javascript">
+	// interaction here
+  $(document).ready(function(){
+    $('.pawn1').hide();
+    $('.pawn2').hide();
+    $('.playerblack').hide();
+    $("#dest1").click(function(){
+      $("#dest1").toggleClass("Select");
+    })
+    $("#target1").click(function(){
+      $("#target1").toggleClass("hidden");
+      $('.pawn1').toggleClass("Show1");
+      $('.pawn1').show();
+      $('.playerwhite').hide();
+      $('.playerblack').show();
+    })
+    $("#dest2").click(function(){
+      $("#dest2").toggleClass("Select");
+    })
+    $("#target2").click(function(){
+      $("#target2").toggleClass("hidden");
+      $('.pawn2').toggleClass("Show2");
+      $('.pawn2').show();
+    })
+     
+   
+});
+  
+ 
 </script>
+</body>
+  
 </html>
